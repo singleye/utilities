@@ -26,8 +26,6 @@ action = function(host, port)
 
     ref_url = string.format("/cgi-bin/QTS.cgi?count=%d", ri)
     response = http.get(host, port, ref_url, {redirect_ok=false})
-    print(string.format("QNAP scanning: %s", ref_url))
-
     if response.status and response.status ~= 302 then
         return
     end
@@ -35,6 +33,6 @@ action = function(host, port)
     local redirect_ref, redirect_url
     redirect_ref = response.header['location']
     if redirect_ref and redirect_ref:find "cgi%-bin/login.html" then
-        return string.format("QNAP nas found been found at %s:%d", host, port)
+        return string.format("QNAP nas found been found at %s:%d", host['ip'], port['number'])
     end
 end
